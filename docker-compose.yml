@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:ro
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  rtl433:
+    build:
+      context: ./rtl433
+    container_name: rtl433
+    depends_on:
+      - mqtt-broker
+    environment:
+      - MQTT_BROKER_HOST=mqtt-broker
+      - MQTT_BROKER_PORT=1883
+      - MQTT_TOPIC_PREFIX=sensor
+    privileged: true
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - network.host=0.0.0.0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    depends_on:
+      - mqtt-broker
+      - elasticsearch
+    environment:
+      - PORT=4000
+      - MQTT_BROKER_URL=mqtt://mqtt-broker:1883
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - AEMET_API_KEY=${AEMET_API_KEY}
+      - AEMET_LOCATION_CODE=${AEMET_LOCATION_CODE}
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+
+volumes:
+  esdata:

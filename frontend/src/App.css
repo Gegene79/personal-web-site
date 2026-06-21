@@ -1,0 +1,189 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f6fb;
+  color: #1f2a38;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  margin: 0;
+  min-height: 100%;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 2.8vw, 3rem);
+}
+
+.app-header p {
+  margin: 8px 0 0;
+  color: #526d8c;
+}
+
+.dashboard-cards,
+.sensor-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.dashboard-cards {
+  grid-template-columns: 1fr;
+  margin-bottom: 18px;
+}
+
+.sensor-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 24px;
+}
+
+.chart-section {
+  margin-top: 24px;
+}
+
+.sensor-card-compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  min-height: 140px;
+}
+
+.sensor-header {
+  margin-bottom: 8px;
+}
+
+.sensor-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sensor-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.sensor-temp {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.sensor-humidity {
+  font-size: 1.2rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sensor-time {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 8px;
+}
+
+.chart-card {
+  grid-column: 1 / -1;
+}
+
+.status {
+  padding: 20px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #d8e2ef;
+  color: #334155;
+}
+
+.status.error {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d8e2ef;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.card strong {
+  display: block;
+  margin-top: 12px;
+  color: #1f2937;
+}
+
+.weather-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.weather-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-state {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weather-temperature {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.forecast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.forecast-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px;
+  flex: 1 1 120px;
+  min-width: 120px;
+}
+
+.forecast-item span {
+  display: block;
+}
+
+.sensor-meta {
+  display: grid;
+  gap: 6px;
+}
